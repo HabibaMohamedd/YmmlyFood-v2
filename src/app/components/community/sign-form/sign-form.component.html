@@ -1,0 +1,86 @@
+<app-header></app-header>
+
+<section class="community__container {{ isDark ? 'dark' : '' }}">
+    <flash-messages></flash-messages>
+    <div class=" {{ flag ? 'right-panel-active container' : 'container'}}" id="container">
+        <div class="form-container sign-up-container">
+            <form (submit)="stopSubmitting()" [formGroup]="registerForm">
+
+                <input type="text" placeholder="Username" #usernameInput formControlName="Username" />
+                <div *ngIf="registerForm.controls['Username'].invalid && (registerForm.controls['Username'].dirty || registerForm.controls['Username'].touched)"
+                    class="alert alert-danger">
+                    <div *ngIf="registerForm.controls['Username'].errors.required">{{"USERREQ" | translate}}</div>
+                    <div *ngIf="registerForm.controls['Username'].errors.minlength">{{"USER6" | translate}}</div>
+                </div>
+                <input type="email" placeholder="Email" #emailInput formControlName="email" />
+                <div *ngIf="registerForm.controls['email'].invalid && (registerForm.controls['email'].dirty || registerForm.controls['email'].touched)"
+                    class="alert alert-danger">
+                    <div *ngIf="registerForm.controls['email'].errors.required">{{"EMAILREQ" | translate}}</div>
+                    <div *ngIf="registerForm.controls['email'].errors.email">{{"EMAILVALID" | translate}}</div>
+                </div>
+                <label class="file">
+                    <input name="image" (change)="onFileChanged($event)" type="file" id="file"
+                        aria-label="File browser example">
+                    <span class="file-custom"></span>
+                </label>
+                <input type="password" placeholder="Password" #passwordInput formControlName="password" />
+                <div *ngIf="registerForm.controls['password'].invalid && (registerForm.controls['password'].dirty || registerForm.controls['password'].touched)"
+                    class="alert alert-danger">
+                    <div *ngIf="registerForm.controls['password'].errors.required">{{"PASSREQ" | translate}}</div>
+                    <div *ngIf="registerForm.controls['password'].errors.minlength">{{"PASS6" | translate}}</div>
+                </div>
+
+                <input type="password" formControlName="confirmPassword" placeholder="Confirmed Password"
+                    #confirmedPasswordInput />
+                <div *ngIf="registerForm.controls['confirmPassword'].invalid && (registerForm.controls['confirmPassword'].dirty || registerForm.controls['confirmPassword'].touched)"
+                    class="alert alert-danger">
+                    <div *ngIf="registerForm.controls['confirmPassword'].errors.required">{{"CONPASSREQ" | translate}}
+                    </div>
+                    <div *ngIf="registerForm.controls['confirmPassword'].errors.mustMatch">{{"PASSMATCH" | translate}}
+                    </div>
+                </div>
+                <button [disabled]="!registerForm.valid"
+                    (click)="singUp(usernameInput.value, emailInput.value, passwordInput.value, confirmedPasswordInput.value)">{{"SIGNUP"
+                    | translate}}</button>
+
+            </form>
+        </div>
+        <div class="form-container sign-in-container">
+            <form (submit)="stopSubmitting()" [formGroup]="loginForm">
+                <h1>{{"SIGNIN" | translate}}</h1>
+                <input type="email" placeholder="Email" #emailInputLogin formControlName="emailLogin" />
+                <div *ngIf="loginForm.controls['emailLogin'].invalid && (loginForm.controls['emailLogin'].dirty || loginForm.controls['emailLogin'].touched)"
+                    class="alert alert-danger">
+                    <div *ngIf="loginForm.controls['emailLogin'].errors.required">{{"EMAILREQ" | translate}}</div>
+                    <div *ngIf="loginForm.controls['emailLogin'].errors.email">{{"EMAILVALID" | translate}}
+                    </div>
+                </div>
+                <input type="password" placeholder="Password" #passwordInputLogin formControlName="passwordLogin" />
+                <div *ngIf="loginForm.controls['passwordLogin'].invalid && (loginForm.controls['passwordLogin'].dirty || loginForm.controls['passwordLogin'].touched)"
+                    class="alert alert-danger">
+                    <div *ngIf="loginForm.controls['passwordLogin'].errors.required">{{"PASSREQ" | translate}}</div>
+                    <div *ngIf="loginForm.controls['passwordLogin'].errors.minlength">{{"PASS6" | translate}}</div>
+                </div>
+                <!-- <a href="#">Forgot your password?</a> -->
+                <button [disabled]="!loginForm.valid"
+                    (click)="login(emailInputLogin.value,passwordInputLogin.value)">{{"SIGNIN" | translate}}</button>
+            </form>
+        </div>
+        <div class="overlay-container">
+            <div class="overlay">
+                <div class="overlay-panel overlay-left">
+                    <h1>{{"WLCBACK" | translate}}</h1>
+                    <p>{{"SIGNCONTENT1" | translate}}</p>
+                    <button (click)="buttonClicked()" class=" ghost " id="signIn ">{{"SIGNIN" | translate}}</button>
+                </div>
+                <div class="overlay-panel overlay-right ">
+                    <h1>{{"AGAIN" | translate}}</h1>
+                    <p>{{"SIGNCONTENT2" | translate}}</p>
+                    <button class="ghost " (click)="buttonClicked() " id="signUp ">{{"SIGNUP" | translate}}</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</section>

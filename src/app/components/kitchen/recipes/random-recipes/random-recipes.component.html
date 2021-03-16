@@ -1,0 +1,54 @@
+<app-header></app-header>
+<app-chatbot></app-chatbot>
+<ngx-spinner type="none">
+    <div class="pan-loader">
+        <div class="loader"></div>
+        <div class="pan-container">
+            <div class="pan"></div>
+            <div class="handle"></div>
+        </div>
+    </div>
+</ngx-spinner>
+<div class="parts {{ isDark ? 'dark' : '' }} {{language=='ar' ? 'ar' : ''}}">
+    <div>
+        <a (click)="back()" class="previous round">
+            <i class="fas fa-long-arrow-alt-left" style="color:#f98169"></i></a>
+        <a (click)="refresh()" class="previous round">
+            <i class="fas fa-redo" style="color:#f98169"></i>{{"GETRANDOM" | translate}}</a>
+    </div>
+    <div class="row mt-5 ">
+        <div class="header__contianer col-md-12 mt-5">
+            <h3 class="header--title">{{"EXPLORERANDOM" | translate}}
+                <hr>
+            </h3>
+        </div>
+        <div class="col-md-4 mt-4" *ngFor="let recipe of randomRecipes;let currentIndex=index">
+            <div class="food-item">
+                <h2 *ngIf="language=='ar' && translatedTitles.translations;else other_name">
+                    {{translatedTitles.translations[currentIndex].translatedText}}
+                </h2>
+                <ng-template #other_name>
+                    <h2>{{ recipe.dishTypes[0]}}</h2>
+                </ng-template>
+                <img src="{{ recipe.image }}" alt="">
+                <div class="price"><i class="ion fa fa-user-friends"></i>{{ recipe.servings }}
+                </div>
+                <div class="text-content">
+                    <h4 *ngIf="language=='ar' && translatedRecipes.translations;else other_title">
+                        {{translatedRecipes.translations[currentIndex].translatedText}}</h4>
+                    <ng-template #other_title>
+                        <h4>{{ recipe.title }}</h4>
+                    </ng-template>
+                    <i class="ion fa fa-clock"></i><span class="value">{{ recipe.readyInMinutes
+                        }}</span><span class="title"> {{"MINUTES" | translate}}</span>
+                    <footer class="content__footer">
+                        <a routerLink="/kitchen/recipes/recipe-details/{{
+            recipe.id
+          }}/information">{{"VIEWRECIPE" | translate}}</a>
+                    </footer>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<app-footer></app-footer>

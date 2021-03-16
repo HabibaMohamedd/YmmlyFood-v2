@@ -1,0 +1,126 @@
+<app-header></app-header>
+<app-chatbot></app-chatbot>
+<ngx-spinner type="none">
+    <div class="pan-loader">
+        <div class="loader"></div>
+        <div class="pan-container">
+            <div class="pan"></div>
+            <div class="handle"></div>
+        </div>
+    </div>
+</ngx-spinner>
+
+<div class="cont_principal {{ isDark ? 'dark' : '' }}">
+    <section id="home" class="slider">
+        <div class="item item-first">
+            <div class="caption">
+                <div class="container">
+                    <div>
+                        <p>{{"SEARCHING" | translate}}</p>
+                        <div class="wrapper">
+                            <input type="checkbox" />
+                            <div class="btn"><i class="fas fa-info"></i></div>
+                            <div class="tooltip">
+                                <span>{{"INGTOOLTIP" | translate}}</span>
+                            </div>
+                        </div>
+                    </div>
+                    <form onSubmit="return false; ">
+                        <div class="input-icons">
+                            <input #ingredientname class="input-field" type="text"
+                                placeholder="Search for ingredient" />
+                        </div>
+                        <div class="sub-container">
+                            <div class="button-container">
+                                <button class="btn btn-1" (click)="onSubmit(ingredientname.value)">
+                                    <svg>
+                                        <rect x="0 " y="0 " fill="none " width="100% " height="100% " />
+                                    </svg>
+                                    {{"SEARCH" | translate}}
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <section class="ingredients__container">
+
+        <h3 class="ingredient__title my-3">{{"SEARCHFOR" | translate}} <em>
+                {{ingredientName}}
+            </em></h3>
+        <div class="ft-recipe my-5" *ngFor="let ingredient of ingredientDetails; let currentIndex = index">
+
+            <div>
+                <div class="ft-recipe__thumb">
+                    <img src="https://spoonacular.com/cdn/ingredients_500x500/{{ingredient.image}}"
+                        alt="Strawberry Waffle" />
+                </div>
+                <div class="ft-recipe__content">
+                    <header class="content__header">
+                        <div class="row-wrapper">
+                            <h2 class="recipe-title"
+                                *ngIf="language == 'ar' && translatedTitles.translations; else other_name">
+                                {{translatedTitles.translations[currentIndex].translatedText}}</h2>
+                            <ng-template #other_name>
+                                <h2 class="recipe-title">{{ingredient.name}}</h2>
+                            </ng-template>
+                            <div class="user-rating"></div>
+                        </div>
+                        <ul class="recipe-details">
+                            <li class="recipe-details-item "
+                                *ngFor="let nutrients of ingredient.nutrition.nutrients;let nutrientsIndex = index">
+                                <ng-container *ngIf="nutrientsIndex < 4">
+                                    <i class="fas fa-check"></i>
+                                    <span class="value">{{nutrients.amount}}</span>
+                                    <span class="title">{{nutrients.name}}</span>
+                                </ng-container>
+                            </li>
+
+                        </ul>
+                    </header>
+
+                    <footer class="content__footer">
+                        <a (click)="isReadMoreClicked=currentIndex">{{"MOREDET" | translate}}</a>
+                    </footer>
+                    <div class="popup {{ isReadMoreClicked == currentIndex ?  'show' : ''}}">
+
+                        <div class="popup__content">
+                            <div class="image__container">
+                                <img src="https://spoonacular.com/cdn/ingredients_500x500/{{ingredient.image}}" alt="">
+                            </div>
+                            <div class="ingredient__details">
+                                <h3 class="recipe-title"
+                                    *ngIf="language == 'ar' && translatedTitles.translations; else other_name">
+                                    {{translatedTitles.translations[currentIndex].translatedText}}</h3>
+                                <ng-template #other_name>
+                                    <h3 class="recipe-title">{{ingredient.name}}</h3>
+                                </ng-template>
+                                <ul class="recipe-details">
+                                    <li class="recipe-details-item "
+                                        *ngFor="let nutrients of ingredient.nutrition.nutrients;let nutrientsIndex = index">
+
+                                        <i class="fas fa-check"></i>
+                                        <span class="value">{{nutrients.amount}}</span>
+                                        <span class="title">{{nutrients.name}}</span>
+
+                                    </li>
+
+                                </ul>
+                            </div>
+
+                            <button class="close" (click)="isReadMoreClicked=null"> X </button>
+
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+    </section>
+</div>
+<app-footer></app-footer>

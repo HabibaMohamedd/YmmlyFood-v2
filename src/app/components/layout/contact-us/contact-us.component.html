@@ -1,0 +1,49 @@
+<app-header></app-header>
+<div class="main-container {{ isDark ? 'dark' : '' }}">
+    <div style="margin-top: 9rem;" [formGroup]="contactForm" class="contact-form {{ isDark ? 'dark' : '' }}">
+        <div class="first-container">
+        </div>
+        <div class="second-container">
+            <div class="col-xs-6" *ngIf="showMsg">
+                <p class="alert alert-success text-center">
+                    <span>{{"MSGSENTSUCC" | translate}}</span>
+                </p>
+            </div>
+            <h2>{{"CONTACTUS" | translate}}</h2>
+            <form (submit)="sendEmail($event)" [formGroup]="contactForm">
+                <div class="form-group">
+                    <label for="name-input">{{"TELLNAME" | translate}}</label>
+                    <input name="user_name" id="name-input" type="text" placeholder="Full Name"
+                        formControlName="fullname" required>
+                    <div *ngIf="contactForm.controls['fullname'].invalid && (contactForm.controls['fullname'].dirty || contactForm.controls['fullname'].touched)"
+                        class="alert alert-danger">
+                        <span *ngIf="contactForm.controls['fullname'].errors.required">{{"NAMEREQ" | translate}}</span>
+                        <span *ngIf="contactForm.controls['fullname'].errors.minlength">{{"NAMEMIN" | translate}}</span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="email-input">{{"ENTEREMAIL" | translate}}</label>
+                    <input name="user_email" id="email-input" type="text" placeholder="example@email.com"
+                        formControlName="email" required>
+                    <div *ngIf="contactForm.controls['email'].invalid && (contactForm.controls['email'].dirty || contactForm.controls['email'].touched)"
+                        class="alert alert-danger">
+                        <div *ngIf="contactForm.controls['email'].errors.required">{{"EMAILREQ" | translate}}</div>
+                        <div *ngIf="contactForm.controls['email'].errors.email">{{"EMAILVALID" | translate}}</div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="message-textarea">{{"MESSAGE" | translate}}</label>
+                    <textarea name="message" id="message-textarea" placeholder="Write us a message"
+                        formControlName="message"></textarea>
+                    <div *ngIf="contactForm.controls['message'].invalid && (contactForm.controls['message'].dirty || contactForm.controls['message'].touched)"
+                        class="alert-danger">
+                        <span *ngIf="contactForm.controls['message'].errors.required">{{"MSGRREQ" | translate}}</span>
+                        <span *ngIf="contactForm.controls['message'].errors.minlength">{{"MSGMIN" | translate}}</span>
+                    </div>
+                </div>
+                <button>{{"SENDMSG" | translate}}</button>
+            </form>
+        </div>
+    </div>
+</div>
+<app-footer></app-footer>

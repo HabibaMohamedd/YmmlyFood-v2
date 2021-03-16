@@ -1,0 +1,79 @@
+<header class="header-area header-sticky">
+    <div class="container center-container">
+        <div class="row">
+            <div class="col-12">
+                <nav class="main-nav">
+                    <!-- * Logo Start * -->
+                    <a routerLink='/' class="logo {{currentLang=='ar'? 'ar-header' : ''}}">Yummly<em> Food</em></a>
+                    <!-- * Logo End * -->
+                    <!-- * Menu Start * -->
+                    <ul class="nav {{ isDark ? 'dark' : '' }} {{currentLang=='ar'? 'ar-nav' : ''}}">
+                        <li class="scroll-to-section"><a routerLink="/kitchen" routerLinkActive="active"
+                                [routerLinkActiveOptions]="{exact: true}">{{"KITCHEN" | translate}}</a>
+                        </li>
+                        <li class="scroll-to-section"><a routerLink="/community" routerLinkActive="active">{{"COMMUNITY"
+                                | translate}}</a>
+                        </li>
+                        <li class="scroll-to-section"><a routerLink="/kitchen/recipes/search" routerLinkActive="active"
+                                [routerLinkActiveOptions]="{exact: true}">{{"RECIPES" | translate}}</a></li>
+                        <li class="scroll-to-section"><a routerLink="/kitchen/ingredients/search"
+                                routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">{{"INGREDIENTS" |
+                                translate}}</a></li>
+                        <li class="scroll-to-section"><a routerLink="/contact" routerLinkActive="active"
+                                [routerLinkActiveOptions]="{exact: true}">{{"CONTACT" | translate}}</a></li>
+                        <li class="scroll-to-section">
+                            <div class="switch-wrapper">
+                                <!--checkbox -->
+                                <input class="checkbox-input" type="checkbox" (click)="setTheme(checkboxInput.checked)"
+                                    id="toggleTheme" #checkboxInput>
+                                <!--day span -->
+                                <span class="switch-label day">{{"LIGHT" | translate}}</span>
+                                <!--label connected to checkbox -->
+                                <label for="toggleTheme" class="switch"></label>
+                                <!--night span -->
+                                <span class="switch-label night">{{"DARK" | translate}}</span>
+                                <!--end of wrappper switch -->
+                            </div>
+
+                        </li>
+                        <li class="scroll-to-section">
+                            <div class="dropdown">
+                                <a class="dropbtn">{{"LANGUAGE" | translate}}</a>
+                                <div class="dropdown-content">
+                                    <button class="dropdown-item" type="button"
+                                        (click)="changeLanguage('en')">{{"ENGLISH" | translate}}</button>
+                                    <button class="dropdown-item" type="button"
+                                        (click)="changeLanguage('ar')">{{"ARABIC" | translate}}</button>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="scroll-to-section main-button" *ngIf="!isLogged;else other_content"><a
+                                routerLink="/community">{{"SIGNUP" | translate}}</a>
+                        </li>
+                        <ng-template #other_content>
+                            <div class="dropdown">
+                                <i class="fas fa-user-circle profile-dropdown" (click)="userIconClicked()"></i>
+                                <div class="dropdown-content {{isWidthLessThan1200? 'dropdown-content-1200' : ''}}">
+                                    <a *ngIf="user" routerLink="/community/profile/{{user._id}}">{{"PROFILE" |
+                                        translate}}</a>
+                                    <a *ngIf="user" routerLink="/kitchen/recipes/favorite-recipes">{{"RECIPESBOX" |
+                                        translate}}
+                                        <span>{{user.favoriteRecipes.length}}</span></a>
+                                    <a *ngIf="user" routerLink="/community/favourites-posts">{{"FAVPOSTS" |
+                                        translate}}
+                                        <span>{{user.favoritePosts.length}}</span></a>
+                                    <a *ngIf="user" routerLink="/community" (click)="logout()">{{"LOGOUT" |
+                                        translate}}</a>
+                                </div>
+                            </div>
+                        </ng-template>
+                    </ul>
+                    <a class='menu-trigger' (click)="menu()">
+                        <span>Menu</span>
+                    </a>
+                    <!-- * Menu End * -->
+                </nav>
+            </div>
+        </div>
+    </div>
+</header>
