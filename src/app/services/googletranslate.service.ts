@@ -7,7 +7,7 @@ import { GoogleObj } from '../models/translated';
 })
 export class GoogletranslateService {
   url = 'https://translation.googleapis.com/language/translate/v2?key=';
-  key = 'AIzaSyC_cxvMw_nc8E817rKtv7eSWC2WR8mRitk';
+  key = '';
   constructor(private http: HttpClient) {}
   translate(obj: GoogleObj) {
     return this.http.post(this.url + this.key, obj);
